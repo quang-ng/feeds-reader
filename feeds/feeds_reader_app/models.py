@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ModelForm
 
 
 class Channel(models.Model):
@@ -33,3 +34,9 @@ class Item(models.Model):
         max_length=1000, default=None, blank=True, null=True)
     comments = models.URLField(default=None, blank=True, null=True)
     pubDate = models.DateTimeField(default=None, blank=True, null=True)
+
+
+class ChannelForm(ModelForm):
+    class Meta:
+        model = Channel
+        fields = '__all__'

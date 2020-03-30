@@ -1,11 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 from django.conf import settings
 
-from .models import Channel, Item
-
-# Create your views here.
+from .models import Channel, Item, ChannelForm
 
 def index(request):
     channel_list = Channel.objects.all()
@@ -21,6 +19,18 @@ def index(request):
 
     return render(request, 'feeds_reader_app/index.html', { 'channels': channels })
 
-def detail(request, channel_id):
+def detail_channel(request, channel_id):
     channel = get_object_or_404(Channel, pk=channel_id)
     return render(request, 'feeds_reader_app/detail.html', {'channel': channel})
+
+def edit_channel(request, channel_id):
+    item = get_object_or_404(Channel, pk=channel_id)
+    if request.method == "POST":
+        form = ChannelForm(request.POST or None, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect('/feeds/' + str(item.id) + '/')
+        return render(request, 'feeds_reader_app/edit_channel.html', {'form': form})
+
+    form = ChannelForm(instance=item)
+    return render(request, 'feeds_reader_app/edit_channel.html', {'form': form})
