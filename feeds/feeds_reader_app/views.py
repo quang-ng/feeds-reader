@@ -1,7 +1,22 @@
 from django.shortcuts import render
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
+from django.conf import settings
+
+from .models import Channel, Item
 
 # Create your views here.
 
 def index(request):
-    return HttpResponse("Hello, world.")
+    channel_list = Channel.objects.all()
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(channel_list, settings.PAGE_SIZE)
+    try:
+        channels = paginator.page(page)
+    except PageNotAnInteger:
+        channels = paginator.page(1)
+    except EmptyPage:
+        channels = paginator.page(paginator.num_pages)
+
+    return render(request, 'feeds_reader_app/index.html', { 'channels': channels })
