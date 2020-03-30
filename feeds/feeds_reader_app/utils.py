@@ -96,7 +96,7 @@ def read_feed(feed_url, output=NullOutput()):
     try:
         ret = requests.get(feed_url, headers=headers,
                            allow_redirects=False, timeout=20)
-        output.write(str(ret))
+        output.write(f"\nFetch done. Status {ret.status_code}")
     except Exception as ex:
         logging.error("Fetch feed error: " + str(ex))
         output.write("\nFetch error: " + str(ex))
@@ -117,11 +117,11 @@ def read_feed(feed_url, output=NullOutput()):
     # NOT ELIF, WE HAVE TO START THE IF AGAIN TO COPE WTIH 302
     # now we are not following redirects 302, 303
     if ret and ret.status_code >= 200 and ret.status_code < 300:
-        return parse_feed(ret.content)
+        return parse_feed(ret.content, output)
     return None
 
 
-def parse_feed(feed_content):
+def parse_feed(feed_content, output=NullOutput()):
     """ Parse feed xml."""
     feed_parser_dict = None
     try:
@@ -154,6 +154,23 @@ def parse_feed(feed_content):
         )
         channel.save()
 
+        ## Store log
+        output.write(f"\n----------------------------------------------------------------")
+        output.write(f"\nChannel")
+        output.write(f"\nID: {channel.id}")
+        output.write(f"\nTitle: {channel.title}")
+        output.write(f"\nDescription: {channel.description}")
+        output.write(f"\nLink: {channel.link}")
+        output.write(f"\nCategory: {channel.category}")
+        output.write(f"\nCopyright: {channel.copyright}")
+        output.write(f"\nDocs: {channel.docs}")
+        output.write(f"\nLanguage: {channel.language}")
+        output.write(f"\nLast_build_date: {channel.last_build_date}")
+        output.write(f"\nManaging_editor: {channel.managing_editor}")
+        output.write(f"\nPub_date: {channel.pub_date}")
+        output.write(f"\nWeb_master: {channel.web_master}")
+        output.write(f"\nGenerator: {channel.generator}")
+
         entries = feed_parser_dict.entries
         items = []
         for entry in entries:
@@ -168,6 +185,15 @@ def parse_feed(feed_content):
                 pubDate=pub_date,
             )
             item.save()
+            output.write(f"\n----------------------------------------------------------------")
+            output.write(f"\nItem detail")
+            output.write(f"\nID: {item.id}")
+            output.write(f"\nChannel ID: {item.channel.id}")
+            output.write(f"\nTitle: {item.title}")
+            output.write(f"\nDescription: {item.description}")
+            output.write(f"\nLink: {item.link}")
+            output.write(f"\nComments: {item.comments}")
+            output.write(f"\nPubDate: {item.pubDate}")
             items.append(item)
         return FeedResult(channel, items)
     except AttributeError as attribute_error:
