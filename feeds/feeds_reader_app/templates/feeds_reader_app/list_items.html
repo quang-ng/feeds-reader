@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>
+    List of item in channel {{channel_id}}
+</h2>
+<a href="/feeds/{{channel_id}}">Back to channel</a>
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>pubDate</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td>
+                <a href="/feeds/detail_item/{{ item.id }}/">{{ item.id }}</a>
+            </td>
+            <td>{{ item.title }}</td>
+            <td>{{ item.pubDate }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if items.has_other_pages %}
+<nav aria-label="Page navigation example">
+<ul class="pagination">
+    {% if items.has_previous %}
+    <li class="page-item"><a class="page-link" href="?page={{ items.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+    <li class="disabled"><span class="page-link">&laquo;</span></li>
+    {% endif %}
+    {% for i in items.paginator.page_range %}
+    {% if items.number == i %}
+    <li class="active page-item"><span class="page-link" >{{ i }} <span class="sr-only">(current)</span></span></li>
+    {% else %}
+    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+    {% endif %}
+    {% endfor %}
+    {% if items.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{ items.next_page_number }}">&raquo;</a></li>
+    {% else %}
+    <li class="disabled"><span class="page-link">&raquo;</span></li>
+    {% endif %}
+</ul>
+</nav>
+{% endif %}
+
+{% endblock %}

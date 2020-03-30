@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Detail of item {{item.title}}</h2>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <a href="/feeds/items/{{item.channel.id}}">Back to list items</a>|
+            <a href="/feeds/edit_item/{{item.id}}">Edit </a>
+        </div>
+      </div>
+    <div class="row">
+      <div class="col">
+        Title
+      </div>
+      <div class="col">
+        {{item.title}}
+      </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            Description
+        </div>
+        <div class="col">
+          {{item.description}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          Link
+        </div>
+        <div class="col">
+          {{item.link}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          Category
+        </div>
+        <div class="col">
+          {{item.category}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+            comments
+        </div>
+        <div class="col">
+          {{item.comments}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+            pubDate
+        </div>
+        <div class="col">
+          {{item.pubDate}}
+        </div>
+      </div>
+      
+</div>
+
+{% endblock %}

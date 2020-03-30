@@ -40,3 +40,8 @@ class ChannelForm(ModelForm):
     class Meta:
         model = Channel
         fields = '__all__'
+
+class ItemForm(ModelForm):
+    class Meta:
+        model = Item
+        fields = '__all__'
