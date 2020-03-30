@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{ channel.title }}
+
+
+{% for item in channel.item_set.all %}
+    <li>{{ item.title }}</li>
+{% endfor %}
+
+{% endblock %}

@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+<h2>
+    List of channels
+</h2>
 <table class="table table-hover table-bordered">
     <thead>
         <tr>
+            <th>ID</th>
             <th>Title</th>
             <th>Description</th>
             <th>Link</th>
@@ -13,6 +16,9 @@
     <tbody>
         {% for c in channels %}
         <tr>
+            <td>
+                <a href="/feeds/{{ c.id }}/">{{ c.id }}</a>
+            </td>
             <td>{{ c.title }}</td>
             <td>{{ c.description }}</td>
             <td>{{ c.link }}</td>
