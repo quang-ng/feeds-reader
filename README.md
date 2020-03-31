@@ -68,7 +68,7 @@ In this project, I use SQLite to store database. To setup datatabse run
 ![Image description](./screenshots/filter_page_1.png)
 ![Image description](./screenshots/filter_page_2.png)
 
-* Log file whine grab feed
+* Log file while grab feed
 ![Image description](./screenshots/log_of_program_while_grab_rss.png)
 
 ## Authors
