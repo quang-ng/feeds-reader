@@ -31,6 +31,16 @@ def detail_channel(request, channel_id):
     channel = get_object_or_404(Channel, pk=channel_id)
     return render(request, 'feeds_reader_app/detail.html', {'channel': channel})
 
+def delete_channel(request, channel_id):
+    Channel.objects.filter(id=channel_id).delete()
+    return redirect('/feeds/')
+
+def delete_item(request, item_id):
+    item = get_object_or_404(Item, pk=item_id)
+    channel = item.channel
+
+    Item.objects.filter(id=item_id).delete()
+    return redirect('/feeds/items/' + str(channel.id) + '/')
 
 def edit_channel(request, channel_id=None):
     if channel_id:

@@ -12,6 +12,7 @@
             <th>ID</th>
             <th>Title</th>
             <th>pubDate</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -22,6 +23,9 @@
             </td>
             <td>{{ item.title }}</td>
             <td>{{ item.pubDate }}</td>
+            <td>
+                <a href="/feeds/delete_item/{{ item.id }}/" onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
