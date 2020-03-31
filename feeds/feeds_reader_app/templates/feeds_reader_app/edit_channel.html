@@ -27,9 +27,59 @@
     </div>
 
     <div class="form-group">
+        {{ form.category.errors }}
+        <label for="{{ form.category.id_for_label }}">category:</label><br/>
+        {{ form.category }}
+    </div>
+
+    <div class="form-group">
+        {{ form.copyright.errors }}
+        <label for="{{ form.copyright.id_for_label }}">copyright:</label><br/>
+        {{ form.copyright }}
+    </div>
+    
+    
+    <div class="form-group">
+      {{ form.docs.errors }}
+      <label for="{{ form.docs.id_for_label }}">docs:</label><br/>
+      {{ form.docs }}
+    </div>
+
+    <div class="form-group">
         {{ form.language.errors }}
         <label for="{{ form.language.id_for_label }}">language:</label><br/>
         {{ form.language }}
+    </div>
+
+    <div class="form-group">
+        {{ form.last_build_date.errors }}
+        <label for="{{ form.last_build_date.id_for_label }}">last_build_date:</label><br/>
+        {{ form.last_build_date }}
+    </div>
+
+    <div class="form-group">
+        {{ form.managing_editor.errors }}
+        <label for="{{ form.managing_editor.id_for_label }}">managing_editor:</label><br/>
+        {{ form.managing_editor }}
+    </div>
+    
+    
+    <div class="form-group">
+      {{ form.pub_date.errors }}
+      <label for="{{ form.pub_date.id_for_label }}">pub_date:</label><br/>
+      {{ form.pub_date }}
+    </div>
+
+    <div class="form-group">
+        {{ form.web_master.errors }}
+        <label for="{{ form.web_master.id_for_label }}">web_master:</label><br/>
+        {{ form.web_master }}
+    </div>
+
+    <div class="form-group">
+        {{ form.generator.errors }}
+        <label for="{{ form.generator.id_for_label }}">generator:</label><br/>
+        {{ form.generator }}
     </div>
   
 
