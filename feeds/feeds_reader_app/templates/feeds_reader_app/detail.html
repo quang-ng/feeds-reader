@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Detail of channel {{channel.title}}</h2>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <a href="/feeds/">Back to list</a>|
+            <a href="/feeds/edit_channel/{{channel.id}}">Edit </a>|
+            <a href="/feeds/items/{{channel.id}}/">List of item in the channel </a>
+        </div>
+      </div>
+    <div class="row">
+      <div class="col">
+        Title
+      </div>
+      <div class="col">
+        {{channel.title}}
+      </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            Description
+        </div>
+        <div class="col">
+          {{channel.description}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          Link
+        </div>
+        <div class="col">
+          {{channel.link}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          Category
+        </div>
+        <div class="col">
+          {{channel.category}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          Copyright
+        </div>
+        <div class="col">
+          {{channel.copyright}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          Docs
+        </div>
+        <div class="col">
+          {{channel.docs}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          Language
+        </div>
+        <div class="col">
+          {{channel.language}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+            Last build date
+        </div>
+        <div class="col">
+          {{channel.last_build_date}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+            Managing Editor
+        </div>
+        <div class="col">
+          {{channel.managing_editor}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+            Pub date
+        </div>
+        <div class="col">
+          {{channel.pub_date}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+            Web master
+        </div>
+        <div class="col">
+          {{channel.web_master}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+            Generator
+        </div>
+        <div class="col">
+          {{channel.generator}}
+        </div>
+      </div>
+</div>
+
+{% endblock %}
