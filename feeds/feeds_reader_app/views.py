@@ -4,12 +4,18 @@ from django.http import HttpResponse
 from django.conf import settings
 
 from .models import Channel, Item, ChannelForm, ItemForm
+from .filters import ChannelFilter
+
 
 def index(request):
-    channel_list = Channel.objects.all()
-    page = request.GET.get('page', 1)
+    query = Channel.objects.all()
+    channel_filter = ChannelFilter(request.GET, queryset=query)
+    channel_list = channel_filter.qs
+    form = channel_filter.form
 
+    page = request.GET.get('page', 1)
     paginator = Paginator(channel_list, settings.PAGE_SIZE)
+
     try:
         channels = paginator.page(page)
     except PageNotAnInteger:
@@ -17,11 +23,14 @@ def index(request):
     except EmptyPage:
         channels = paginator.page(paginator.num_pages)
 
-    return render(request, 'feeds_reader_app/index.html', { 'channels': channels })
+    return render(request, 'feeds_reader_app/index.html',
+                  {'channels': channels, "channel_form": form})
+
 
 def detail_channel(request, channel_id):
     channel = get_object_or_404(Channel, pk=channel_id)
     return render(request, 'feeds_reader_app/detail.html', {'channel': channel})
+
 
 def edit_channel(request, channel_id):
     channel = get_object_or_404(Channel, pk=channel_id)
@@ -35,6 +44,7 @@ def edit_channel(request, channel_id):
     form = ChannelForm(instance=channel)
     return render(request, 'feeds_reader_app/edit_channel.html', {'form': form})
 
+
 def items(request, channel_id):
     item_list = Item.objects.filter(channel_id=channel_id)
     page = request.GET.get('page', 1)
@@ -47,13 +57,15 @@ def items(request, channel_id):
     except EmptyPage:
         items = paginator.page(paginator.num_pages)
 
-    return render(request, 
-        'feeds_reader_app/list_items.html', 
-        { 'items': items, "channel_id": channel_id })
+    return render(request,
+                  'feeds_reader_app/list_items.html',
+                  {'items': items, "channel_id": channel_id})
+
 
 def detail_item(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
     return render(request, 'feeds_reader_app/detail_item.html', {'item': item})
+
 
 def edit_item(request, item_id):
     item = get_object_or_404(Item, pk=item_id)

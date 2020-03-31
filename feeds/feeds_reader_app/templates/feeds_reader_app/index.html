@@ -1,54 +1,91 @@
 {% extends 'base.html' %}
+{% block title %}
+List of channels
+{% endblock title %}
 
 {% block content %}
-<h2>
-    List of channels
-</h2>
-<table class="table table-hover table-bordered">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Category</th>
-            <th>Link</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for c in channels %}
-        <tr>
-            <td>
-                <a href="/feeds/{{ c.id }}/">{{ c.id }}</a>
-            </td>
-            <td>{{ c.title }}</td>
-            <td>{{ c.category }}</td>
-            <td>{{ c.link }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="row">
+    <div class="col-md-3">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Filter</span>
+        </h4>
+        {% load widget_tweaks %}
+        <form method="get" class="border p-3">
+            <div class="mb-3">
+                <label for="">Title</label>
+                {% render_field channel_form.title class="form-control" %}
+            </div>
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Search</button>
+        </form>
+    </div>
+    <div class="col-md-8">
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in channels %}
+                <tr>
+                    <td>
+                        <a href="/feeds/{{ c.id }}/">{{ c.id }}</a>
+                    </td>
+                    <td>{{ c.title }}</td>
+                    <td>{{ c.category }}</td>
+                    <td>{{ c.link }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-{% if channels.has_other_pages %}
-<nav aria-label="Page navigation example">
-<ul class="pagination">
-    {% if channels.has_previous %}
-    <li class="page-item"><a class="page-link" href="?page={{ channels.previous_page_number }}">&laquo;</a></li>
-    {% else %}
-    <li class="disabled"><span class="page-link">&laquo;</span></li>
-    {% endif %}
-    {% for i in channels.paginator.page_range %}
-    {% if channels.number == i %}
-    <li class="active page-item"><span class="page-link" >{{ i }} <span class="sr-only">(current)</span></span></li>
-    {% else %}
-    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
-    {% endif %}
-    {% endfor %}
-    {% if channels.has_next %}
-    <li class="page-item"><a class="page-link" href="?page={{ channels.next_page_number }}">&raquo;</a></li>
-    {% else %}
-    <li class="disabled"><span class="page-link">&raquo;</span></li>
-    {% endif %}
-</ul>
-</nav>
+        {% if channels.has_other_pages %}
+        <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if channels.has_previous %}
+                
+
+                {% if 'title' in request.get_full_path %}
+                    <li class="page-item"><a class="page-link" href="?{{ request.get_full_path }}&page={{ channels.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{ channels.previous_page_number }}">&laquo;</a></li>
+                {% endif %}
+
+            {% else %}
+                <li class="disabled"><span class="page-link">&laquo;</span></li>
+            {% endif %}
+            {% for i in channels.paginator.page_range %}
+            {% if channels.number == i %}
+                <li class="active page-item">
+                    <span class="page-link" >{{ i }} <span class="sr-only">(current)</span></span>
+                </li>
+            {% else %}
+                
+                
+                {% if 'title' in request.get_full_path %}
+                    <li class="page-item"><a class="page-link" href="{{ request.get_full_path }}&page={{ i }}">{{ i }}</a></li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+                
+            {% endif %}
+            {% endfor %}
+            {% if channels.has_next %}
+                {% if 'title' in request.get_full_path %}
+                    <li class="page-item"><a class="page-link" href="?{{ request.get_full_path }}&page={{ channels.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{ channels.next_page_number }}">&raquo;</a></li>
+                {% endif %}
+            {% else %}
+                <li class="disabled"><span class="page-link">&raquo;</span></li>
+            {% endif %}
+        </ul>
+        </nav>
+    </div>
 {% endif %}
 
 {% endblock %}
