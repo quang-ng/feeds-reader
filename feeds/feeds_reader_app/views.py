@@ -24,15 +24,15 @@ def detail_channel(request, channel_id):
     return render(request, 'feeds_reader_app/detail.html', {'channel': channel})
 
 def edit_channel(request, channel_id):
-    item = get_object_or_404(Channel, pk=channel_id)
+    channel = get_object_or_404(Channel, pk=channel_id)
     if request.method == "POST":
-        form = ChannelForm(request.POST or None, instance=item)
+        form = ChannelForm(request.POST or None, instance=channel)
         if form.is_valid():
             form.save()
-            return redirect('/feeds/' + str(item.id) + '/')
+            return redirect('/feeds/' + str(channel.id) + '/')
         return render(request, 'feeds_reader_app/edit_channel.html', {'form': form})
 
-    form = ChannelForm(instance=item)
+    form = ChannelForm(instance=channel)
     return render(request, 'feeds_reader_app/edit_channel.html', {'form': form})
 
 def items(request, channel_id):
@@ -57,8 +57,11 @@ def detail_item(request, item_id):
 
 def edit_item(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
+    print("item", item.channel.id)
     if request.method == "POST":
         form = ItemForm(request.POST or None, instance=item)
+        print("fff: ", form.is_valid())
+        print("ffffff: ", form.errors)
         if form.is_valid():
             form.save()
             return redirect('/feeds/detail_item/' + str(item.id) + '/')
