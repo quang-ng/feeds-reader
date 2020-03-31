@@ -31,6 +31,24 @@
         <label for="{{ form.link.id_for_label }}">link:</label><br/>
         {{ form.link }}
     </div>
+
+    <div class="form-group">
+        {{ form.category.errors }}
+        <label for="{{ form.category.id_for_label }}">category:</label><br/>
+        {{ form.category }}
+    </div>
+
+    <div class="form-group">
+        {{ form.comments.errors }}
+        <label for="{{ form.comments.id_for_label }}">comments:</label><br/>
+        {{ form.comments }}
+    </div>
+
+    <div class="form-group">
+        {{ form.pubDate.errors }}
+        <label for="{{ form.pubDate.id_for_label }}">pubDate:</label><br/>
+        {{ form.pubDate }}
+    </div>
   
     
     <input type="submit" value="Save">
