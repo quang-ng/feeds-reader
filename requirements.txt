@@ -1,4 +1,4 @@
-Django==3.0.4
+Django==3.0.14
 django-filter==2.2.0
 django-widget-tweaks==1.4.8
 feedparser==5.2.1
